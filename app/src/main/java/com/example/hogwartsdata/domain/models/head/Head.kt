@@ -10,4 +10,8 @@ data class Head(
     val id: String,
     @SerializedName("lastName")
     val lastName: String
-)
+) {
+    fun toHeadEntity(): HeadEntity {
+        return HeadEntity(firstName, id, lastName)
+    }
+}

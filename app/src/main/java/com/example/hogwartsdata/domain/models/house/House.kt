@@ -27,4 +27,8 @@ data class House(
     val name: String,
     @SerializedName("traits")
     val traits: List<Trait>
-)
+) {
+    fun toHouseEntity(): HouseEntity {
+        return HouseEntity(animal, commonRoom, element, founder, ghost, heads.map { it.toHeadEntity() }, houseColours, id, name, traits.map { it.toTraitEntity() })
+    }
+}

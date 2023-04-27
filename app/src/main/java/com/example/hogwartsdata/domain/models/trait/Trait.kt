@@ -8,4 +8,8 @@ data class Trait(
     val id: String,
     @SerializedName("name")
     val name: String
-)
+) {
+    fun toTraitEntity(): TraitEntity {
+        return TraitEntity(id, name)
+    }
+}
