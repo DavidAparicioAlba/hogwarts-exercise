@@ -1,12 +1,15 @@
 package com.example.hogwartsdata.di
 
+import android.content.Context
+import com.example.hogwartsdata.data.local.SharedPreferencesManager
 import com.example.hogwartsdata.data.remote.ApiService
 import com.example.hogwartsdata.data.remote.HeaderInterceptor
-import com.example.hogwartsdata.domain.repositories.HousesRepository
+import com.example.hogwartsdata.domain.repositories.houses.HousesRepository
 import com.example.hogwartsdata.utils.Constants
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -49,5 +52,14 @@ object HouseModule {
     @Singleton
     fun provideHousesRepository(apiService: ApiService) : HousesRepository {
         return HousesRepository(apiService)
+    }
+}
+
+@Module
+@InstallIn(SingletonComponent::class)
+object SharedPreferencesModule {
+    @Provides
+    fun providesSharedPref(@ApplicationContext context: Context) : SharedPreferencesManager {
+        return  SharedPreferencesManager(context)
     }
 }
