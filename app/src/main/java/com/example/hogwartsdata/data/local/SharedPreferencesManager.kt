@@ -11,16 +11,23 @@ class SharedPreferencesManager(val context: Context) {
     companion object {
         private const val PREF_NAME = "kotlin_preferences"
 
-        private const val TOKEN_KEY = "token"
+        private const val USER_KEY = "user"
+        private const val FAVOURITES_KEY = "favourites"
 
     }
 
     fun getUser(): String? {
-        return sharedPreferences.getString(TOKEN_KEY, "")
+        return sharedPreferences.getString(USER_KEY, "")
     }
 
     fun setUser(token: String) {
-        editor.putString(TOKEN_KEY, token).apply()
+        editor.putString(USER_KEY, token).apply()
+    }
+    fun getFavourites(): MutableSet<String> {
+        return sharedPreferences.getStringSet(FAVOURITES_KEY, mutableSetOf()) as MutableSet<String>
+    }
+    fun setFavourites(favs: MutableSet<String>) {
+        editor.putStringSet(FAVOURITES_KEY, favs).apply()
     }
 
 
