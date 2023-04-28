@@ -65,6 +65,8 @@ class HeadsFragment: Fragment() {
                     if (heads.isEmpty()) {
                         putStringArrayList(ARG_CHARACTERS, arrayListOf<String>())
 
+                    } else if (heads.size == 1) {
+                        putStringArrayList(ARG_CHARACTERS, arrayListOf(heads[0]))
                     } else {
                         putStringArrayList(ARG_CHARACTERS, heads as ArrayList<String>?)
                     }

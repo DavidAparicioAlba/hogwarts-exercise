@@ -26,6 +26,7 @@ class HeadsAdapter(var heads: List<String>, var onClick: (String) -> Unit): Recy
 
     inner class ViewHolder(var view: ItemHeadBinding): RecyclerView.ViewHolder(view.root) {
         fun onBind(head: String, position: Int) {
+            view.addFavouriteIv.setImageResource(R.drawable.favourite_unselect)
             view.addFavouriteIv.setOnClickListener {
                 view.addFavouriteIv.setImageResource(R.drawable.favourite)
                 onClick(head)
