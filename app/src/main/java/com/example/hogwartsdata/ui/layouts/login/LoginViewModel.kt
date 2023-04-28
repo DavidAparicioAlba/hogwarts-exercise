@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.hogwartsdata.core.ScreenState
 import com.example.hogwartsdata.data.local.SharedPreferencesManager
-import com.example.hogwartsdata.domain.models.user.LoggedInUserEntity
+import com.example.hogwartsdata.domain.models.user.UserEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -27,6 +27,10 @@ class LoginViewModel @Inject constructor(private val sharedPreferencesManager: S
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
+    init {
+        handleSession()
+    }
+
     private fun showLoading(){
         this.state.value = ScreenState.Render(LoginActivityState.IsLoading(true))
     }
@@ -39,14 +43,20 @@ class LoginViewModel @Inject constructor(private val sharedPreferencesManager: S
         showLoading()
         if (email.isNotEmpty() && password.isNotEmpty()) {
             sharedPreferencesManager.setUser(email)
-            state.value = ScreenState.Render(LoginActivityState.SuccessLogin(LoggedInUserEntity("0", email, password)))
+            state.value = ScreenState.Render(LoginActivityState.SuccessLogin(UserEntity( email, password)))
         }
         //val result = doLoginUC(email.value!!, password.value!!)
         hideLoading()
     }
 
+    fun handleSession() {
+        if (isLogged()) {
+            state.value = ScreenState.Render(LoginActivityState.SuccessLogin(
+                UserEntity(sharedPreferencesManager.getUser().toString(), "1234")))
+        }
+    }
     fun isLogged(): Boolean {
-        return true
+        return !sharedPreferencesManager.getUser().isNullOrEmpty()
     }
 
 }

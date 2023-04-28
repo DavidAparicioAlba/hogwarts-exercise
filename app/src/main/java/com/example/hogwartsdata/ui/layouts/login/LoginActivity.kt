@@ -1,29 +1,33 @@
 package com.example.hogwartsdata.ui.layouts.login
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.hogwartsdata.core.ScreenState
+import com.example.hogwartsdata.data.local.SharedPreferencesManager
 import com.example.hogwartsdata.databinding.ActivityLoginBinding
-import com.example.hogwartsdata.domain.models.user.LoggedInUserEntity
+import com.example.hogwartsdata.domain.models.user.UserEntity
 import com.example.hogwartsdata.ui.layouts.main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
-import javax.xml.validation.Validator
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
 
     private val viewModel: LoginViewModel by viewModels()
     private lateinit var binding: ActivityLoginBinding
-   // @Inject
-    //lateinit var sharedPrefs: SharedPreferencesManager
+    @Inject
+    lateinit var sharedPrefs: SharedPreferencesManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
+        binding.user1 = UserEntity.preloadUsers[0]
+        binding.user2 = UserEntity.preloadUsers[1]
         val view = binding.root
         setContentView(view)
         initListeners()
@@ -32,7 +36,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun initListeners(){
         binding.btnLogin.setOnClickListener {
-            viewModel.doLogin(binding.etEmail.text.toString(), binding.etPassword.text.toString())
+            viewModel.doLogin(binding.etName.editText?.text.toString(), binding.etPassword.editText?.text.toString())
         }
 
         /*binding.etPassword.addTextChangedListener(object : TextWatcher {
@@ -107,7 +111,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun toggleControls(enabled:Boolean) {
         binding.etPassword.isEnabled = enabled
-        binding.etEmail.isEnabled = enabled
+        binding.etName.isEnabled = enabled
         if(enabled) {
             //toggleLoginButton()
         } else {
@@ -115,7 +119,7 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun handleSuccessLogin(userEntity: LoggedInUserEntity){
+    private fun handleSuccessLogin(userEntity: UserEntity){
         startActivity(Intent(this, MainActivity::class.java))
     }
 }
