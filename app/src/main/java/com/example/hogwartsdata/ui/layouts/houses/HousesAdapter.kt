@@ -1,15 +1,13 @@
-package com.example.hogwartsdata.ui.layouts.main
+package com.example.hogwartsdata.ui.layouts.houses
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.hogwartsdata.R
 import com.example.hogwartsdata.databinding.CardHouseBinding
 import com.example.hogwartsdata.domain.models.house.HouseEntity
 
-class HousesAdapter(var houses: List<HouseEntity>, var onClick: (HouseEntity) -> Unit): RecyclerView.Adapter<HousesAdapter.ViewHolder>() {
+class HousesAdapter(var houses: List<HouseEntity>, var onClick: (HouseEntity) -> Unit, var showFavs: () -> Unit): RecyclerView.Adapter<HousesAdapter.ViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -37,6 +35,9 @@ class HousesAdapter(var houses: List<HouseEntity>, var onClick: (HouseEntity) ->
             }
             view.houseIv.setOnClickListener {
                 onClick(house)
+            }
+            view.houseDescTv.setOnClickListener {
+                showFavs()
             }
             view.tvHousesTitle.text = house.name
         }

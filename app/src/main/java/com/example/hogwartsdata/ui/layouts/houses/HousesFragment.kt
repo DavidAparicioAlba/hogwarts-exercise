@@ -1,4 +1,4 @@
-package com.example.hogwartsdata.ui.layouts.main
+package com.example.hogwartsdata.ui.layouts.houses
 
 import android.content.Context
 import android.os.Bundle
@@ -7,11 +7,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.hogwartsdata.R
 import com.example.hogwartsdata.databinding.FragmentHousesBinding
-import com.example.hogwartsdata.domain.models.house.House
+import com.example.hogwartsdata.domain.models.head.HeadEntity
 import com.example.hogwartsdata.domain.models.house.HouseEntity
 import com.example.hogwartsdata.utils.appContext
 import dagger.hilt.android.AndroidEntryPoint
@@ -24,25 +22,21 @@ class HousesFragment : Fragment() {
     private val binding get() = _binding!!
 
     private var mAdapter: HousesAdapter? = null
-    private var houses: List<HouseEntity> = listOf()
-
-    interface OnHandleRVInterface {
+    interface OnHandleHousesInterface {
         fun updateRV(houses: List<HouseEntity>, clickInHouse: (HouseEntity) -> Unit)
         fun clickInHouse(houseEntity: HouseEntity)
+
+        fun clickInFavourites()
     }
 
-    private var adapterListener: OnHandleRVInterface? = null
+    interface OnHandleHeads
 
-
-
-        override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    private var adapterListener: OnHandleHousesInterface? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         try {
-            adapterListener = context as OnHandleRVInterface
+            adapterListener = context as OnHandleHousesInterface
         }catch (e: ClassCastException){
             throw ClassCastException(activity.toString() + " must implement OnHandleQRCall")
         }
@@ -51,16 +45,15 @@ class HousesFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentHousesBinding.inflate(inflater, container, false)
-        val view = binding.root
-        return view
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        var housesList = arguments?.getParcelableArrayList<HouseEntity>(ARG) as List<HouseEntity>
+        val housesList = arguments?.getParcelableArrayList<HouseEntity>(ARG) as List<HouseEntity>
         updateAdapter(housesList)
         //adapterListener!!::clickInHouse.let { adapterListener?.updateRV(housesList, it) }
     }
@@ -71,7 +64,7 @@ class HousesFragment : Fragment() {
         const val TAG = "houses_fragment"
 
         fun newInstance(houses: List<HouseEntity>) = HousesFragment().apply {
-            var array: ArrayList<Parcelable> = arrayListOf<Parcelable>()
+            val array: ArrayList<Parcelable> = arrayListOf()
             for (house in houses) {
                 array.add(house)
             }
@@ -83,7 +76,7 @@ class HousesFragment : Fragment() {
     }
 
     fun updateAdapter(houses: List<HouseEntity>) {
-        mAdapter = adapterListener!!::clickInHouse?.let { HousesAdapter(houses, it) }
+        mAdapter = HousesAdapter(houses, adapterListener!!::clickInHouse, adapterListener!!::clickInFavourites)
         binding.rvHouses.adapter = mAdapter
         binding.rvHouses.layoutManager = LinearLayoutManager(appContext)
     }

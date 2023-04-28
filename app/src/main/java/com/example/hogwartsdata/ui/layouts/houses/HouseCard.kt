@@ -1,11 +1,10 @@
-package com.example.hogwartsdata.ui.layouts.main
+package com.example.hogwartsdata.ui.layouts.houses
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.hogwartsdata.R
 import com.example.hogwartsdata.databinding.CardHouseBinding
 
 class HouseCard : Fragment() {
