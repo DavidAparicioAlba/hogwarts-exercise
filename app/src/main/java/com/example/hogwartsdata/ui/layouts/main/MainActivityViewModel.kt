@@ -5,6 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.hogwartsdata.core.ScreenState
+import com.example.hogwartsdata.data.local.SharedPreferencesManager
+import com.example.hogwartsdata.domain.models.head.HeadEntity
 import com.example.hogwartsdata.domain.uc.BaseResult
 import com.example.hogwartsdata.domain.uc.ObtainHousesUC
 import com.example.hogwartsdata.domain.uc.ObtainSingleHouseUC
@@ -16,7 +18,11 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainActivityViewModel @Inject constructor(private val obtainHousesUC: ObtainHousesUC, private val obtainSingleHouseUC: ObtainSingleHouseUC): ViewModel() {
+class MainActivityViewModel @Inject constructor(
+    private val obtainHousesUC: ObtainHousesUC,
+    private val obtainSingleHouseUC: ObtainSingleHouseUC,
+    private val sharedPreferencesManager: SharedPreferencesManager
+): ViewModel() {
 
     private val _state: MutableLiveData<ScreenState<MainActivityScreenState>> = MutableLiveData()
     val state: LiveData<ScreenState<MainActivityScreenState>>
@@ -73,5 +79,17 @@ class MainActivityViewModel @Inject constructor(private val obtainHousesUC: Obta
                 }
         }
     }
+    fun addFavourite(head: String) {
+        val favs = if(sharedPreferencesManager.getFavourites().isNullOrEmpty()) {
+            mutableSetOf()
+        } else {
+            sharedPreferencesManager.getFavourites()
+        }
+        favs?.add(head)
+        favs?.let { sharedPreferencesManager.setFavourites(it) }
+    }
 
+    fun getFavourites() {
+        _state.value = ScreenState.Render(MainActivityScreenState.ShowFavouriteCharacters(sharedPreferencesManager.getFavourites()))
+    }
 }

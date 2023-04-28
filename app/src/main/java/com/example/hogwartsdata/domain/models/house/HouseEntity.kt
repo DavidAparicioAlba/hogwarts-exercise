@@ -62,6 +62,5 @@ data class HouseEntity(
         listOf<TraitEntity>().apply {
             parcel.readList(this, TraitEntity::class.java.classLoader)
         }
-        ) {
-    }
+    )
 }

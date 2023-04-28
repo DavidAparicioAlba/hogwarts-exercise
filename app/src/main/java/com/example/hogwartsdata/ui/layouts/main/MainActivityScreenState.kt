@@ -10,6 +10,6 @@ sealed class MainActivityScreenState {
     data class ShowToast(val message: String) : MainActivityScreenState()
     data class ShowHouses(val houseListEntity: List<HouseEntity>) : MainActivityScreenState()
     data class ShowHouseInfo(val houseEntity: HouseEntity) : MainActivityScreenState()
-    data class ShowFavouriteCharacters(val headList: List<HeadEntity>) : MainActivityScreenState()
+    data class ShowFavouriteCharacters(val headList: MutableSet<String>) : MainActivityScreenState()
     data class ErrorShowHouses(val rawResponse: House) : MainActivityScreenState()
 }
