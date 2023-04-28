@@ -66,7 +66,7 @@ class HeadsFragment: Fragment() {
                         putStringArrayList(ARG_CHARACTERS, arrayListOf<String>())
 
                     } else {
-                        putStringArrayList(ARG_CHARACTERS, heads as ArrayList<String>)
+                        putStringArrayList(ARG_CHARACTERS, heads as ArrayList<String>?)
                     }
                 }
 
