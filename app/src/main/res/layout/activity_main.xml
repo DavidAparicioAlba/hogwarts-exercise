@@ -24,15 +24,19 @@
         android:layout_width="match_parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
     <TextView
         android:id="@+id/tv_title"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="184dp"
-        android:layout_marginLeft="184dp"
         android:layout_marginTop="104dp"
+        android:layout_marginBottom="300dp"
+        android:textColor="@color/darker"
+        android:gravity="center"
+        android:textSize="20dp"
+        android:textStyle="bold"
         android:text="Houses"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

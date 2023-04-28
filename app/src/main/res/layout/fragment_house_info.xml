@@ -40,6 +40,7 @@
                 android:layout_height="200dp"
                 android:layout_marginStart="104dp"
                 android:layout_marginLeft="104dp"
+                android:layout_marginTop="20dp"
                 android:gravity="center"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -125,6 +126,45 @@
                 app:layout_constraintEnd_toEndOf="@+id/house_ghost_tv"
                 app:layout_constraintStart_toStartOf="@+id/house_ghost_tv"
                 app:layout_constraintTop_toBottomOf="@+id/house_ghost_tv" />
+            <TextView
+                android:id="@+id/house_colours_tv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="52dp"
+                android:ellipsize="end"
+                android:maxLines="3"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:text='@{"color: "+house.houseColours}'
+                android:textSize="20dp"
+                android:textColor="@color/darkGray"
+                app:layout_constraintEnd_toEndOf="@+id/house_founder_tv"
+                app:layout_constraintStart_toStartOf="@+id/house_founder_tv"
+                app:layout_constraintTop_toBottomOf="@+id/house_founder_tv" />
+            <TextView
+                android:id="@+id/house_characters_tv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="72dp"
+                android:ellipsize="end"
+                android:maxLines="3"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:text="characters"
+                android:textSize="20dp"
+                android:textColor="@color/darkGray"
+                app:layout_constraintEnd_toEndOf="@+id/house_colours_tv"
+                app:layout_constraintStart_toStartOf="@+id/house_colours_tv"
+                app:layout_constraintTop_toBottomOf="@+id/house_colours_tv" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_heads"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:gravity="center"
+                app:layout_constraintStart_toStartOf="@id/house_characters_tv"
+                app:layout_constraintTop_toBottomOf="@id/house_characters_tv" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
